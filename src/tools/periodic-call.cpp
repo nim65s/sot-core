@@ -28,7 +28,7 @@
 #include <sot/core/debug.hh>
 #include <sot/core/exception-tools.hh>
 #include <algorithm>
-#include <dynamic-graph/python/interpreter.hh>
+//#include <dynamic-graph/python/interpreter.hh>
 #include <dynamic-graph/all-commands.h>
 #include <dynamic-graph/exception-factory.h>
 
@@ -47,14 +47,16 @@ PeriodicCall( void )
   : signalMap()
     ,cmdList()
     ,innerTime( 0 )
-  ,py_sh( NULL )
+  //,py_sh( NULL )
 {
 
 }
 
+/*
 void PeriodicCall::
 setPyInterpreter( dynamicgraph::python::Interpreter* ptr )
 { py_sh = ptr; }
+*/
 
 /* --------------------------------------------------------------------- */
 /* --------------------------------------------------------------------- */
@@ -133,6 +135,7 @@ runSignals( const int& t )
   return ;
 }
 
+/*
 void PeriodicCall::
 runCmds( void )
 {
@@ -148,11 +151,12 @@ runCmds( void )
     }
   return ;
 }
+*/
 
 void PeriodicCall::
 run( const int & t )
 {
-  runSignals( t ); runCmds();
+  runSignals( t ); //runCmds();
   return ;
 }
 
@@ -195,6 +199,7 @@ static std::string readLineStr( istringstream& args )
   return res;
 }
 
+/*
 bool PeriodicCall::
 commandLine( const std::string& cmdLine,
 	     std::istringstream& cmdArgs,
@@ -237,6 +242,7 @@ commandLine( const std::string& cmdLine,
   else { return false; }
   return true;
 }
+*/
 
 #define ADD_COMMAND( name,def )                                     \
 if (commandMap.count(prefix+name) != 0) {                            \

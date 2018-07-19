@@ -39,11 +39,13 @@
 /* --- CLASS ----------------------------------------------------------- */
 /* --------------------------------------------------------------------- */
 
+/*
 namespace dynamicgraph {
   namespace python {
     class Interpreter;
   }
 }
+*/
 
 namespace dynamicgraph {
 namespace sot {
@@ -79,7 +81,7 @@ class SOT_CORE_EXPORT PeriodicCall
   CmdListType cmdList;
 
   int innerTime;
-  dynamicgraph::python::Interpreter * py_sh;
+  //dynamicgraph::python::Interpreter * py_sh;
 
   /* --- FUNCTIONS ------------------------------------------------------------ */
  public:
@@ -110,7 +112,7 @@ class SOT_CORE_EXPORT PeriodicCall
 			    dynamicgraph::Entity::CommandMap_t& commap,
 			    const std::string & prefix = "" );
 
-  void setPyInterpreter( dynamicgraph::python::Interpreter * py_sh );
+  //void setPyInterpreter( dynamicgraph::python::Interpreter * py_sh );
 };
 
 
