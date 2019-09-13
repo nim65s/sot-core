@@ -19,55 +19,58 @@
 #include <vector>
 
 /* SOT */
-#include "sot/core/api.hh"
 #include <sot/core/exception-task.hh>
+#include "sot/core/api.hh"
 
 /* --------------------------------------------------------------------- */
 /* --- CLASS ----------------------------------------------------------- */
 /* --------------------------------------------------------------------- */
 
-namespace dynamicgraph { namespace sot {
+namespace dynamicgraph {
+namespace sot {
 
-class SOT_CORE_EXPORT MultiBound
-{
+class SOT_CORE_EXPORT MultiBound {
  public:
   enum MultiBoundModeType { MODE_SINGLE, MODE_DOUBLE };
-  enum SupInfType { BOUND_SUP,BOUND_INF };
+  enum SupInfType { BOUND_SUP, BOUND_INF };
 
- public:// protected:
+ public:  // protected:
   MultiBoundModeType mode;
   double boundSingle;
-  double boundSup,boundInf;
-  bool boundSupSetup,boundInfSetup;
+  double boundSup, boundInf;
+  bool boundSupSetup, boundInfSetup;
 
  public:
-  MultiBound( const double x = 0.);
-  MultiBound( const double xi,const double xs );
-  MultiBound( const double x,const SupInfType bound );
-  MultiBound( const MultiBound& clone );
+  MultiBound(const double x = 0.);
+  MultiBound(const double xi, const double xs);
+  MultiBound(const double x, const SupInfType bound);
+  MultiBound(const MultiBound& clone);
 
- public: // Acessors
-  MultiBoundModeType getMode( void ) const;
-  double getSingleBound( void ) const;
-  double getDoubleBound( const SupInfType bound ) const;
-  bool getDoubleBoundSetup( const SupInfType bound ) const;
+ public:  // Acessors
+  MultiBoundModeType getMode(void) const;
+  double getSingleBound(void) const;
+  double getDoubleBound(const SupInfType bound) const;
+  bool getDoubleBoundSetup(const SupInfType bound) const;
 
- public: // Modifiors
-  void setDoubleBound( SupInfType boundType,double boundValue );
-  void unsetDoubleBound( SupInfType boundType );
-  void setSingleBound( double boundValue );
+ public:  // Modifiors
+  void setDoubleBound(SupInfType boundType, double boundValue);
+  void unsetDoubleBound(SupInfType boundType);
+  void setSingleBound(double boundValue);
 
  public:
-  SOT_CORE_EXPORT friend std::ostream& operator<< ( std::ostream& os, const MultiBound & m  );
-  SOT_CORE_EXPORT friend std::istream& operator>> ( std::istream& is, MultiBound & m  );
+  SOT_CORE_EXPORT friend std::ostream& operator<<(std::ostream& os,
+                                                  const MultiBound& m);
+  SOT_CORE_EXPORT friend std::istream& operator>>(std::istream& is,
+                                                  MultiBound& m);
 };
 
 /* --------------------------------------------------------------------- */
-typedef std::vector< MultiBound > VectorMultiBound;
-SOT_CORE_EXPORT std::ostream& operator<< (std::ostream& os, const VectorMultiBound& v );
-SOT_CORE_EXPORT std::istream& operator>> (std::istream& os, VectorMultiBound& v );
+typedef std::vector<MultiBound> VectorMultiBound;
+SOT_CORE_EXPORT std::ostream& operator<<(std::ostream& os,
+                                         const VectorMultiBound& v);
+SOT_CORE_EXPORT std::istream& operator>>(std::istream& os, VectorMultiBound& v);
 
-} /* namespace sot */} /* namespace dynamicgraph */
+} /* namespace sot */
+} /* namespace dynamicgraph */
 
-
-#endif // #ifndef __SOT_MultiBound_H__
+#endif  // #ifndef __SOT_MultiBound_H__

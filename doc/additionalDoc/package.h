@@ -10,8 +10,8 @@ having high level software capabilities, like plugins and python scripting.
 
 The code is based on the <c>dynamic-graph</c> package, which provides the
 framework on which sot-core relies. Hence most of the code in <c>sot-core</c>
-consists of classes that derive from dynamic_graph::Entity. These entities are usually
-compiled and linked in their own dynamic library, as a python module
+consists of classes that derive from dynamic_graph::Entity. These entities are
+usually compiled and linked in their own dynamic library, as a python module
 
 Aside from the python modules, this package installs a core library libsot-core,
 that provides functions and code common to all modules. All python modules
@@ -119,10 +119,9 @@ A hierarchical inequality solver, sot::SolverHierarchicalInequalities, is
 present. For the maths, see \ref Mansard2007.
 
 \subsection subsec_exceptions Exceptions
-The library defines the following classes of exceptions that derive from std::exception:
-\li sot::ExceptionAbstract (the base class for all exceptions in sot-core; use it to
-catch only sot-core exceptions)
-\li sot::ExceptionDynamic
+The library defines the following classes of exceptions that derive from
+std::exception: \li sot::ExceptionAbstract (the base class for all exceptions in
+sot-core; use it to catch only sot-core exceptions) \li sot::ExceptionDynamic
 \li sot::ExceptionFactory (raised if issues in instancing tasks and features)
 \li sot::ExceptionFeature (raised by a feature - see \ref subsec_Features)
 \li sot::ExceptionSignal
@@ -141,7 +140,8 @@ the dynamic-graph package).
 \subsection subsec_Features Features
 The class dynamicgraph::sot::FeatureAbstract is the base class for features.
 all other classes are in entity \ref sot_plugins "python modules".
-For more information on what is a feature, see the documentation of class dynamic_graph::sot::FeatureAbstract.
+For more information on what is a feature, see the documentation of class
+dynamic_graph::sot::FeatureAbstract.
 
 \subsection subsec_Tasks Tasks
 
@@ -149,7 +149,7 @@ Tasks are the hierarchical element of the stack of tasks.
 
 A task computes a value and a Jacobian as output signals.
 Once stacked into a solver, the solver will compute the control vector
-that makes the task value converge toward zero in the 
+that makes the task value converge toward zero in the
 order defined by the priority levels. For more information see the documentation
 of class dynamicgraph::sot:TaskAbstract.
 
@@ -158,8 +158,9 @@ The following classes encapsulate common mathematical objects, and
 are all defined in the core library; see each individual class documentation
 for reference.
 \li Vectors: (sot::VectorQuaternion, sot::VectorRollPitchYaw, sot::VectorUTheta)
-\li Matrices: (sot::MatrixForce, sot::MatrixHomogeneous, sot::MatrixRotation, sot::MatrixTwist)
-\li sot::MultiBound can be used to enforce bounds on numeric values
+\li Matrices: (sot::MatrixForce, sot::MatrixHomogeneous, sot::MatrixRotation,
+sot::MatrixTwist) \li sot::MultiBound can be used to enforce bounds on numeric
+values
 
 \subsection subsec_others Others
 The core library also contains functions for adaptation and extension of
@@ -172,61 +173,61 @@ See \ref factory for additional information.
 \defgroup plugins_list List of python modules
 These python modules are linked with the core library.
 
-	sot/sot-qr
-	sot/weighted-sot
-	sot/sot-h
-	sot/sot
+        sot/sot-qr
+        sot/weighted-sot
+        sot/sot-h
+        sot/sot
 
-	math/op-point-modifier
+        math/op-point-modifier
 
-	matrix/binary-op
-	matrix/derivator
-	matrix/fir-filter
-	matrix/integrator-abstract
-	matrix/integrator-euler
-	matrix/matrix-constant
-	matrix/unary-op
-	matrix/vector-constant
-	matrix/vector-to-rotation
+        matrix/binary-op
+        matrix/derivator
+        matrix/fir-filter
+        matrix/integrator-abstract
+        matrix/integrator-euler
+        matrix/matrix-constant
+        matrix/unary-op
+        matrix/vector-constant
+        matrix/vector-to-rotation
 
-	task/gain-adaptive
-	task/task-pd
-	task/constraint
-	task/gain-hyperbolic
-	task/task
-	task/task-conti
-	task/task-unilateral
+        task/gain-adaptive
+        task/task-pd
+        task/constraint
+        task/gain-hyperbolic
+        task/task
+        task/task-conti
+        task/task-unilateral
 
-	feature/feature-point6d
-	feature/feature-vector3
-	feature/feature-generic
-	feature/feature-joint-limits
-	feature/feature-1d
-	feature/feature-point6d-relative
-	feature/feature-visual-point
-	feature/feature-task
-	feature/feature-line-distance
+        feature/feature-point6d
+        feature/feature-vector3
+        feature/feature-generic
+        feature/feature-joint-limits
+        feature/feature-1d
+        feature/feature-point6d-relative
+        feature/feature-visual-point
+        feature/feature-task
+        feature/feature-line-distance
 
-	traces/reader
+        traces/reader
 
-	tools/time-stamp
-	tools/timer
-	tools/seq-play
-	tools/sequencer
-	tools/robot-simu
-	tools/periodic-call-entity
-	tools/motion-period
-	tools/neck-limitation
-	tools/mailbox-vector
-	tools/kalman
-	tools/joint-limitator
-	tools/gripper-control
-	tools/com-freezer
-	tools/clamp-workspace
-	tools/binary-int-to-uint
+        tools/time-stamp
+        tools/timer
+        tools/seq-play
+        tools/sequencer
+        tools/robot-simu
+        tools/periodic-call-entity
+        tools/motion-period
+        tools/neck-limitation
+        tools/mailbox-vector
+        tools/kalman
+        tools/joint-limitator
+        tools/gripper-control
+        tools/com-freezer
+        tools/clamp-workspace
+        tools/binary-int-to-uint
 
-	control/control-gr
-	control/control-pd
+        control/control-gr
+        control/control-pd
 
 @defgroup factory Factory
 
@@ -256,4 +257,3 @@ They are all located in the tests directory.
 
 
 */
-

@@ -1,3 +1,4 @@
+# flake8: noqa
 from derivator import Derivator_of_Matrix
 from derivator import Derivator_of_Vector
 
@@ -59,4 +60,3 @@ from operator import Multiply_matrixHomo_vector
 #from operator import Compose_RPY_and_T
 #from operator import EndomorphismBasis
 from operator import ConvolutionTemporal
-

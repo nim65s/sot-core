@@ -11,8 +11,8 @@
 #include <dynamic-graph/all-commands.h>
 #include <dynamic-graph/factory.h>
 
-#include <sot/core/factory.hh>
 #include <sot/core/exp-moving-avg.hh>
+#include <sot/core/factory.hh>
 
 namespace dg = ::dynamicgraph;
 
@@ -21,46 +21,39 @@ namespace dg = ::dynamicgraph;
 /* ---------------------------------------------------------------------------*/
 
 namespace dynamicgraph {
-  namespace sot {
+namespace sot {
 
-
-DYNAMICGRAPH_FACTORY_ENTITY_PLUGIN(ExpMovingAvg,"ExpMovingAvg");
-
+DYNAMICGRAPH_FACTORY_ENTITY_PLUGIN(ExpMovingAvg, "ExpMovingAvg");
 
 /* --------------------------------------------------------------------- */
 /* --- CLASS ----------------------------------------------------------- */
 /* --------------------------------------------------------------------- */
 
-
-ExpMovingAvg::
-ExpMovingAvg( const std::string& n )
-  :Entity(n)
-  ,updateSIN(NULL, "ExpMovingAvg(" + n + ")::input(vector)::update")   
-  ,refresherSINTERN( "ExpMovingAvg("+n+")::intern(dummy)::refresher"  )
-  ,averageSOUT(
-	       boost::bind(&ExpMovingAvg::update,this,_1,_2),
-	       updateSIN << refresherSINTERN, "ExpMovingAvg(" + n + ")::output(vector)::average")
-  ,alpha(0.)
-  ,init(false)
-{
+ExpMovingAvg::ExpMovingAvg(const std::string& n)
+    : Entity(n),
+      updateSIN(NULL, "ExpMovingAvg(" + n + ")::input(vector)::update"),
+      refresherSINTERN("ExpMovingAvg(" + n + ")::intern(dummy)::refresher"),
+      averageSOUT(boost::bind(&ExpMovingAvg::update, this, _1, _2),
+                  updateSIN << refresherSINTERN,
+                  "ExpMovingAvg(" + n + ")::output(vector)::average"),
+      alpha(0.),
+      init(false) {
   // Register signals into the entity.
   signalRegistration(updateSIN << averageSOUT);
-  refresherSINTERN.setDependencyType( TimeDependency<int>::ALWAYS_READY );
+  refresherSINTERN.setDependencyType(TimeDependency<int>::ALWAYS_READY);
 
   std::string docstring;
   // setAlpha
   docstring =
-    "\n"
-    "    Set the alpha used to update the current value."
-    "\n";
+      "\n"
+      "    Set the alpha used to update the current value."
+      "\n";
   addCommand(std::string("setAlpha"),
-	     new ::dynamicgraph::command::Setter<ExpMovingAvg, double>
-	     (*this, &ExpMovingAvg::setAlpha, docstring));
+             new ::dynamicgraph::command::Setter<ExpMovingAvg, double>(
+                 *this, &ExpMovingAvg::setAlpha, docstring));
 }
 
-ExpMovingAvg::~ExpMovingAvg()
-{
-}
+ExpMovingAvg::~ExpMovingAvg() {}
 
 /* --- COMPUTE ----------------------------------------------------------- */
 /* --- COMPUTE ----------------------------------------------------------- */
@@ -72,8 +65,7 @@ void ExpMovingAvg::setAlpha(const double& alpha_) {
 }
 
 dynamicgraph::Vector& ExpMovingAvg::update(dynamicgraph::Vector& res,
-						 const int& inTime)
-{
+                                           const int& inTime) {
   const dynamicgraph::Vector& update = updateSIN(inTime);
 
   if (init == false) {
@@ -87,7 +79,5 @@ dynamicgraph::Vector& ExpMovingAvg::update(dynamicgraph::Vector& res,
   return res;
 }
 
-
-
-  } /* namespace sot */
+} /* namespace sot */
 } /* namespace dynamicgraph */

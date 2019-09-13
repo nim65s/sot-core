@@ -19,88 +19,72 @@
 namespace dg = dynamicgraph;
 
 /* SOT */
-#include <dynamic-graph/signal-time-dependent.h>
-#include <dynamic-graph/signal-ptr.h>
 #include <dynamic-graph/entity.h>
-
+#include <dynamic-graph/signal-ptr.h>
+#include <dynamic-graph/signal-time-dependent.h>
 
 /* --------------------------------------------------------------------- */
 /* --- API ------------------------------------------------------------- */
 /* --------------------------------------------------------------------- */
 
-#if defined (WIN32) 
-#  if defined (control_pd_EXPORTS)
-#    define ControlPD_EXPORT __declspec(dllexport)
-#  else  
-#    define ControlPD_EXPORT  __declspec(dllimport)
-#  endif 
+#if defined(WIN32)
+#if defined(control_pd_EXPORTS)
+#define ControlPD_EXPORT __declspec(dllexport)
 #else
-#  define ControlPD_EXPORT
+#define ControlPD_EXPORT __declspec(dllimport)
+#endif
+#else
+#define ControlPD_EXPORT
 #endif
 
 namespace dynamicgraph {
-  namespace sot {
+namespace sot {
 
-  /* --------------------------------------------------------------------- */
-  /* --- CLASS ----------------------------------------------------------- */
-  /* --------------------------------------------------------------------- */
+/* --------------------------------------------------------------------- */
+/* --- CLASS ----------------------------------------------------------- */
+/* --------------------------------------------------------------------- */
 
-  class ControlPD_EXPORT ControlPD
-    : public Entity
-    {
+class ControlPD_EXPORT ControlPD : public Entity {
+ public: /* --- CONSTRUCTOR ---- */
+  ControlPD(const std::string& name);
 
-    public: /* --- CONSTRUCTOR ---- */
+ public: /* --- INIT --- */
+  void init(const double& step);
 
-      ControlPD( const std::string & name );
+ public: /* --- CONSTANTS --- */
+  /* Default values. */
+  static const double TIME_STEP_DEFAULT;  // = 0.001
 
-    public: /* --- INIT --- */
+ public: /* --- ENTITY INHERITANCE --- */
+  static const std::string CLASS_NAME;
+  virtual void display(std::ostream& os) const;
+  virtual const std::string& getClassName(void) const { return CLASS_NAME; }
 
-      void init( const double& step);
+ protected:
+  /* Parameters of the torque-control function:
+   * tau = kp * (qd-q) + kd* (dqd-dq) */
+  double TimeStep;
 
-    public: /* --- CONSTANTS --- */
+ public: /* --- SIGNALS --- */
+  SignalPtr<dg::Vector, int> KpSIN;
+  SignalPtr<dg::Vector, int> KdSIN;
+  SignalPtr<dg::Vector, int> positionSIN;
+  SignalPtr<dg::Vector, int> desiredpositionSIN;
+  SignalPtr<dg::Vector, int> velocitySIN;
+  SignalPtr<dg::Vector, int> desiredvelocitySIN;
+  SignalTimeDependent<dg::Vector, int> controlSOUT;
+  SignalTimeDependent<dg::Vector, int> positionErrorSOUT;
+  SignalTimeDependent<dg::Vector, int> velocityErrorSOUT;
 
-      /* Default values. */
-      static const double TIME_STEP_DEFAULT;   // = 0.001
+ protected:
+  dg::Vector& computeControl(dg::Vector& tau, int t);
+  dg::Vector position_error_;
+  dg::Vector velocity_error_;
+  dg::Vector& getPositionError(dg::Vector& position_error, int t);
+  dg::Vector& getVelocityError(dg::Vector& velocity_error, int t);
+};
 
-    public: /* --- ENTITY INHERITANCE --- */
-      static const std::string CLASS_NAME;
-      virtual void display( std::ostream& os ) const; 
-      virtual const std::string& getClassName( void ) const {return CLASS_NAME;}
+}  // namespace sot
+}  // namespace dynamicgraph
 
-
-    protected: 
-  
-      /* Parameters of the torque-control function: 
-       * tau = kp * (qd-q) + kd* (dqd-dq) */
-      double TimeStep;
-
-    public:  /* --- SIGNALS --- */
-
-      SignalPtr<dg::Vector,int> KpSIN;
-      SignalPtr<dg::Vector,int> KdSIN;
-      SignalPtr<dg::Vector,int> positionSIN;
-      SignalPtr<dg::Vector,int> desiredpositionSIN;
-      SignalPtr<dg::Vector,int> velocitySIN;
-      SignalPtr<dg::Vector,int> desiredvelocitySIN;
-      SignalTimeDependent<dg::Vector,int> controlSOUT;
-      SignalTimeDependent<dg::Vector,int> positionErrorSOUT;
-      SignalTimeDependent<dg::Vector,int> velocityErrorSOUT;
-
-    protected:
-
-      dg::Vector& computeControl( dg::Vector& tau,int t );
-      dg::Vector position_error_;
-      dg::Vector velocity_error_;
-      dg::Vector& getPositionError( dg::Vector& position_error,int t );
-      dg::Vector& getVelocityError( dg::Vector& velocity_error,int t );
-
-    };
-
-
-
-} // namespace sot
-} // namespace dynamicgraph
-
-
-
-#endif // #ifndef __SOT_Control_PD_HH__
+#endif  // #ifndef __SOT_Control_PD_HH__
